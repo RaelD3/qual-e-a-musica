@@ -1,0 +1,18 @@
+bom dia! preciso criar um app para brincar de qual é a musica e preciso de sua ajuda
+pensei da seguinte forma: um site simples em html e java no pc mesmo não irei colocar on_line(ao menos não por enquanto rsrsrs)
+o jogo:
+os participantes deverão escolher entre as opções (pode ser A, B, C... ou algo mais criativo rsrsrs)
+ao escolher uma opção aparecerá um enigma para que ele descubra o nome da música, por exemplo: "outro nome dado ao cambio automotivo + o maior astro do sistema solar + objeto usado em jogos de
+aposta formam o nome dessa musica." se o participante souber a resposta então deve escolher 1 nota apenas para responder, se ele não souber pode escolher mais que 1 nota porém o seu adversário
+poderá escolher uma quantidade de notas menor o que lhe dará o direito de responder a pergunta se esse primeiro participante não escolher uma quantidade de notas menor. ao responder 
+corretamente marca-se 10 pontos ao responder errado ou não responder os 10 pontos vão para o adversário, deu pra entender ou ficou alguma dúvida?
+ o software:
+na primeira tela digita-se o nome dos jogadores e clica em começar/iniciar
+nessa próxima tela que aparece é onde o jogador irá escolher uma das opções para responder, ao clicar em uma das opções é exibido a próxima tela que é o enigma e a quantidade de notas que
+ele pode escolher, (pensei de 1 a 7 notas) ao clicar em uma das opções ele toca a quantidade de notas selecionada, escurece a tela e deixa o foco somente na opção selecionada numa
+mensagem que deve aparecer na tela "VOCE AINDA PODE OUVIR MAIS 2 VEZES", e um novo botão "QUAL É A MÚSICA?" (esse botão serve para caso o participante já saiba a resposta)
+se clicar novamente na opção a mensagem muda para "VOCE AINDA PODE OUVIR MAIS 1 VEZ" e clicando novamente
+ele muda para "QUAL É A MÚSICA?" e agora começa um contador regressivo na tela, ao zerar o contador o botão "QUAL É A MÚSICA?" ganha animação de urgência ou algo do tipo
+todo o software deve receber as informações como enigmas, mensagens, tempo do contador regressivo e etc de um documento de texto que estará dentro da pasta do site, os arquivos de
+áudio também estarão em pastas numeradas. preciso que vc crei um roteiro bem completo com tudo que expliquei e mais algumas sugestões ou melhoras que vc tiver para eu criar o software
+no Cursor AI.

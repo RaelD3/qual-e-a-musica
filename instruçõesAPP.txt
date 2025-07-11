@@ -1,0 +1,163 @@
+bom dia! preciso criar um app para brincar de qual é a musica e preciso de sua ajuda
+pensei da seguinte forma: um site simples em html e java no pc mesmo não irei colocar on_line(ao menos não por enquanto rsrsrs)
+o jogo:
+os participantes deverão escolher entre as opções (pode ser A, B, C... ou algo mais criativo rsrsrs)
+ao escolher uma opção aparecerá um enigma para que ele descubra o nome da música, por exemplo: "outro nome dado ao cambio automotivo + o maior astro do sistema solar + objeto usado em jogos de
+aposta formam o nome dessa musica." se o participante souber a resposta então deve escolher 1 nota apenas para responder, se ele não souber pode escolher mais que 1 nota porém o seu adversário
+poderá escolher uma quantidade de notas menor o que lhe dará o direito de responder a pergunta se esse primeiro participante não escolher uma quantidade de notas menor. ao responder 
+corretamente marca-se 10 pontos ao responder errado ou não responder os 10 pontos vão para o adversário, deu pra entender ou ficou alguma dúvida?
+ o software:
+na primeira tela digita-se o nome dos jogadores e clica em começar/iniciar
+nessa próxima tela que aparece é onde o jogador irá escolher uma das opções para responder, ao clicar em uma das opções é exibido a próxima tela que é o enigma e a quantidade de notas que
+ele pode escolher, (pensei de 1 a 7 notas) ao clicar em uma das opções ele toca a quantidade de notas selecionada, escurece a tela e deixa o foco somente na opção selecionada numa
+mensagem que deve aparecer na tela "VOCE AINDA PODE OUVIR MAIS 2 VEZES", e um novo botão "QUAL É A MÚSICA?" (esse botão serve para caso o participante já saiba a resposta)
+se clicar novamente na opção a mensagem muda para "VOCE AINDA PODE OUVIR MAIS 1 VEZ" e clicando novamente
+ele muda para "QUAL É A MÚSICA?" e agora começa um contador regressivo na tela, ao zerar o contador o botão "QUAL É A MÚSICA?" ganha animação de urgência ou algo do tipo
+todo o software deve receber as informações como enigmas, mensagens, tempo do contador regressivo e etc de um documento de texto que estará dentro da pasta do site, os arquivos de
+áudio também estarão em pastas numeradas. 
+🎮 Roteiro Completo – Jogo “Qual é a Música?”
+1. 📁 Estrutura de Pastas do Projeto
+/qual-e-a-musica/
+│
+├── index.html                ← Tela inicial com nomes dos jogadores
+├── game.html                 ← Tela principal do jogo
+├── css/
+│   └── style.css             ← Estilo geral do jogo
+├── js/
+│   ├── main.js               ← Lógica do jogo
+│   └── dataLoader.js         ← Leitura dos enigmas e arquivos
+├── data/
+│   ├── enigmas.txt           ← Lista de enigmas e respostas
+│   └── config.txt            ← Configurações do jogo (mensagens, tempo, etc)
+├── audio/
+│   ├── 01/
+│   │   ├── 1.mp3
+│   │   ├── 2.mp3
+│   │   └── ... até 7.mp3
+│   ├── 02/
+│   │   └── ...
+│   └── ...
+2. 🧩 Estrutura dos Arquivos de Texto
+📄 enigmas.txt
+Formato:
+ID|ENIGMA|RESPOSTA
+01|Outro nome dado ao câmbio + maior astro + item de aposta|Marcha Soldado
+02|Símbolo químico da água + parte de um carro|H2O Motor
+...
+📄 config.txt
+Formato:
+TEMPO_RESPOSTA=30
+MENSAGEM_INICIAL=Você ainda pode ouvir mais 2 vezes.
+MENSAGEM_SEGUNDA=Você ainda pode ouvir mais 1 vez.
+MENSAGEM_FINAL=Última chance! Clique em "Qual é a Música?"
+...
+3. 🖥️ Tela Inicial – index.html
+Inputs para nome dos jogadores (jogador1, jogador2)
+
+Botão: Começar Jogo
+
+Ao clicar, redireciona para game.html com nomes salvos em sessionStorage.
+
+4. 🎲 Tela Principal do Jogo – game.html
+Componentes:
+
+Exibe nome do jogador atual
+
+Lista de cartas (A, B, C, D...) como botões
+
+Botão de ouvir notas (1 a 7) após escolher a carta
+
+Player de áudio
+
+Exibição do enigma
+
+Contador regressivo animado
+
+Botão “Qual é a Música?”
+
+Placar dos dois jogadores
+
+5. 🔁 Mecânica do Jogo
+Ao clicar em uma carta:
+Exibe o enigma correspondente
+
+Mostra opções de quantidade de notas (1 a 7)
+
+Ao selecionar, começa a tocar o áudio correspondente (ex: audio/01/3.mp3)
+
+Exibe mensagem VOCÊ AINDA PODE OUVIR MAIS 2 VEZES
+
+Permite repetir o áudio até 3 vezes
+
+Após 3 vezes, ativa botão QUAL É A MÚSICA? com urgência
+
+Começa um contador regressivo (tempo definido em config.txt)
+
+6. ✅ Resposta e Pontuação
+Após clicar no botão "QUAL É A MÚSICA?":
+
+Input aparece para o jogador digitar a resposta
+
+Botão “Confirmar”
+
+Valida se a resposta é correta
+
+Se SIM: jogador ganha 10 pontos
+
+Se NÃO: adversário ganha 10 pontos
+
+Mostra botão “Próxima Rodada”
+
+Alterna para o próximo jogador
+
+7. 📋 Recursos Adicionais
+Sugestões de melhoria:
+Interface em tela cheia com tema retrô musical
+
+Efeitos sonoros ao ganhar ou errar
+
+Botão para “Desistir” da rodada
+
+Histórico de pontuação e acertos
+
+Versão com suporte para touch screen (para usar em smart displays)
+
+8. 🧠 Lógica JavaScript (resumo)
+main.js
+Controla rodadas, turnos, pontuação, reprodução de áudio e lógica de resposta
+
+Usa sessionStorage para persistência temporária
+
+Usa fetch() para carregar enigmas.txt e config.txt
+
+dataLoader.js
+Funções para:
+
+Ler arquivos de texto locais
+
+Separar os dados em objetos utilizáveis
+
+Retornar enigmas, respostas e configurações
+
+9. 💡 Exemplo de Fluxo de Jogada
+Jogador 1 seleciona carta B
+
+Enigma aparece: “Outro nome dado ao câmbio...”
+
+Escolhe ouvir 3 notas
+
+Toca audio/02/3.mp3
+
+Mensagem: “Você ainda pode ouvir mais 2 vezes”
+
+Repete até o limite
+
+Contador regressivo começa
+
+Responde: “Marcha Soldado” → Resposta correta
+
+Ganha 10 pontos
+
+Troca o turno para Jogador 2
+
+
