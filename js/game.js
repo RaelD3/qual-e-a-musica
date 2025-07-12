@@ -1,4 +1,31 @@
-document.addEventListener('DOMContentLoaded', () => {
+// Carregar configurações do jogo
+async function loadConfig() {
+    try {
+        const response = await fetch('data/config.txt');
+        if (!response.ok) {
+            throw new Error('Erro ao carregar configurações');
+        }
+        const data = await response.text();
+        const config = {};
+        data.split('\n').forEach(line => {
+            const [key, value] = line.split('=');
+            config[key] = value;
+        });
+        return config;
+    } catch (error) {
+        console.error('Erro ao carregar configurações:', error);
+        return null;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Carregar configurações
+    const config = await loadConfig();
+    if (!config) {
+        showFloatingMessage('Erro ao carregar configurações do jogo!', false);
+        return;
+    }
+
     // Elementos do DOM
     const player1Info = document.getElementById('player1Info');
     const player2Info = document.getElementById('player2Info');
@@ -201,7 +228,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         playbackControls.classList.remove('hidden');
-        remainingPlays.textContent = `Você ainda pode ouvir mais ${playsRemaining - 1} vezes`;
+        remainingPlays.textContent = playsRemaining === 3 ? config.MENSAGEM_INICIAL :
+                                    playsRemaining === 2 ? config.MENSAGEM_SEGUNDA :
+                                    playsRemaining === 1 ? config.MENSAGEM_FINAL : '';
     }
 
     // Reproduzir música completa
@@ -224,7 +253,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (playsRemaining > 1) {
             playsRemaining--;
             audioPlayer.play();
-            remainingPlays.textContent = `Você ainda pode ouvir mais ${playsRemaining - 1} vezes`;
+            remainingPlays.textContent = playsRemaining === 2 ? config.MENSAGEM_SEGUNDA :
+                                         playsRemaining === 1 ? config.MENSAGEM_FINAL : '';
 
             if (playsRemaining === 1) {
                 playAgainBtn.disabled = true;
@@ -243,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Iniciar timer
     function startTimer() {
-        let timeLeft = 30;
+        let timeLeft = parseInt(config.TEMPO_RESPOSTA);
         timer.classList.remove('hidden');
 
         timerInterval = setInterval(() => {
@@ -261,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleTimeout() {
         const currentPlayer = sessionStorage.getItem('currentPlayer');
         const otherPlayer = currentPlayer === 'player1' ? 'player2' : 'player1';
-        const otherPlayerScore = parseInt(sessionStorage.getItem(`${otherPlayer}Score`)) + 10;
+        const otherPlayerScore = parseInt(sessionStorage.getItem(`${otherPlayer}Score`)) + parseInt(config.PONTOS_POR_PERGUNTA);
 
         sessionStorage.setItem(`${otherPlayer}Score`, otherPlayerScore.toString());
         
@@ -274,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sessionStorage.setItem('currentPlayer', otherPlayer);
         }
 
-        showFloatingMessage('Tempo esgotado! Pontos para o adversário!', false);
+        showFloatingMessage(config.MENSAGEM_TIMEOUT, false);
         setTimeout(() => location.reload(), 3000);
     }
 
@@ -294,15 +324,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentScore = parseInt(sessionStorage.getItem(`${currentPlayer}Score`));
 
         if (answer === correctAnswer) {
-            const newScore = currentScore + (selectedNotes * 10);
+            const newScore = currentScore + parseInt(config.PONTOS_POR_PERGUNTA);
             sessionStorage.setItem(`${currentPlayer}Score`, newScore.toString());
-            showFloatingMessage('Resposta correta! Pontos adicionados!');
+            showFloatingMessage(config.MENSAGEM_ACERTO);
             playFullSong(); // Tocar a música completa
         } else {
             const otherPlayer = currentPlayer === 'player1' ? 'player2' : 'player1';
-            const otherPlayerScore = parseInt(sessionStorage.getItem(`${otherPlayer}Score`)) + 10;
+            const otherPlayerScore = parseInt(sessionStorage.getItem(`${otherPlayer}Score`)) + parseInt(config.PONTOS_POR_PERGUNTA);
             sessionStorage.setItem(`${otherPlayer}Score`, otherPlayerScore.toString());
-            showFloatingMessage('Resposta incorreta! Pontos para o adversário!', false);
+            showFloatingMessage(config.MENSAGEM_ERRO, false);
             playFullSong(); // Tocar a música completa quando errar
         }
 

@@ -1,7 +1,8 @@
-TEMPO_RESPOSTA=30
+PONTOS_POR_PERGUNTA=10
+TEMPO_RESPOSTA=60
 MENSAGEM_INICIAL=Você ainda pode ouvir mais 2 vezes
 MENSAGEM_SEGUNDA=Você ainda pode ouvir mais 1 vez
-MENSAGEM_FINAL=Última chance! Clique em "Qual é a Música?"
+MENSAGEM_FINAL=Última chance! "Qual é a Música?"
 MENSAGEM_TIMEOUT=Tempo esgotado! Pontos para o adversário!
 MENSAGEM_ACERTO=Parabéns! Você acertou! +10 pontos!
 MENSAGEM_ERRO=Que pena! Você errou! Pontos para o adversário!
